@@ -16,7 +16,7 @@ my_headers = {
         'Accept-Language' : 'zh-CN,zh;q=0.9,en;q=0.8'
     }
 
-def get_cookies(username = '', passwd = '', pt = '', login=False):
+def get_cookies(username = '123', passwd = '', pt = '', login=False):
     filename = "cookies_%s.txt"%pt
     if login:
         i = 0
