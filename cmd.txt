@@ -1,7 +1,0 @@
-unix£º 
-python your1.py &
-python your2.py &
-
-windows:
-cmd /c "python your1.py"
-cmd /c "python your2.py"

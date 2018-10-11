@@ -1,0 +1,57 @@
+{
+    "hdc": {
+        "fullname": "HDChina",
+        "urls": {
+            "takelogin": "https://hdchina.org/takelogin.php",
+            "captcha": "https://hdchina.org/image.php?action=regimage&imagehash=",
+            "login": "https://hdchina.org/login.php",
+            "torrent": "https://hdchina.org/torrents.php",
+            "link": "https://hdchina.org/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "imagestring": "",
+            "imagehash": "",
+            "ssl": "yes"
+        },
+        "captcha_pattern": "imagehash=(.*)\" alt"
+    },
+    "frds": {
+        "fullname": "KeepFriends",
+        "urls": {
+            "takelogin": "https://pt.keepfrds.com/takelogin.php",
+            "captcha": "https://pt.keepfrds.com/image.php?action=regimage&imagehash=",
+            "login": "https://pt.keepfrds.com/login.php",
+            "torrent": "https://pt.keepfrds.com/torrents.php",
+            "link": "https://pt.keepfrds.com/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "imagestring": "",
+            "imagehash": "",
+            "ssl": "yes"
+        },
+        "captcha_pattern": "imagehash=(.*)\" border=\"0\""
+    },
+    "u2": {
+        "fullname": "U2-dmhy",
+        "urls": {
+            "takelogin": "https://u2.dmhy.org/takelogin.php",
+            "captcha": "https://u2.dmhy.org/captcha.php?sid=",
+            "login": "https://u2.dmhy.org/portal.php",
+            "torrent": "https://u2.dmhy.org/torrents.php",
+            "link": "https://u2.dmhy.org/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "captcha": "",
+            "login_type": "email",
+            "login_ajax": "1",
+            "ssl": "yes"
+        },
+        "captcha_pattern": "sid=(.*)\" alt"
+    }
+}

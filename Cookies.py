@@ -6,15 +6,10 @@ from PIL import Image
 import io
 import os
 
-pt_link = {
-        'frds': 'http://pt.keepfrds.com/',
-        'hdchina': 'https://hdchina.org/',
-        'u2': '3258'
-    }
+def get_cookies( username, passwd, ptsite_dict, pt = "frds"):
+    login_url = ptsite_dict[pt]['urls']['login']
+    takelogin_url = ptsite_dict[pt]['urls']['takelogin'] # login post url
 
-def get_cookies( username, passwd, pt = "frds"):
-    login_url = pt_link[pt] + "login.php"
-    takelogin_url = pt_link[pt] + "takelogin.php" # login post url
     my_headers = {
         'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
         'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -23,24 +18,25 @@ def get_cookies( username, passwd, pt = "frds"):
     }
     sess = requests.Session()
     login_content =sess.get(login_url, headers = my_headers)
-    pattern = re.compile(r'imagehash=(.*)" border="0"')
-    
+    pattern = re.compile(ptsite_dict[pt]['captcha_pattern'])
+    print(pattern)
     #print(login_content.content)
-    
-    captcha_hash = pattern.findall(login_content.content.decode('utf-8'))[0]
-    
-    captcha_url = pt_link[pt] + "image.php?action=regimage&imagehash=" + captcha_hash
+    #print(login_content.content)
+    captcha_hash = pattern.findall(login_content.content.decode('utf-8'))
+    print(captcha_hash)
+    captcha_url = ptsite_dict[pt]['urls']['captcha'] + captcha_hash[0]
+    print(captcha_url)
     with requests.get(captcha_url) as captcha_img:
         captcha_img_content = io.BytesIO(captcha_img.content)
     Image.open(captcha_img_content).show() # show captcha
     captcha_input = input("Please enter the captcha : ")
-    my_data = {
-        'username' : username,
-        'password' : passwd,
-        'imagestring' : captcha_input,
-        'imagehash' : captcha_hash,
-        'ssl' : 'yes'
-    }
+    my_data = ptsite_dict[pt]['login_data']
+    
+    my_data['imagestring'] = captcha_input
+    my_data['imagehash'] = captcha_hash
+    my_data['username'] = username
+    my_data['password'] = passwd
+
     login = sess.post(takelogin_url, headers = my_headers, data = my_data)
     print(login.url, login.status_code, login.history)
     if (login.url.find('index')==-1):
@@ -54,7 +50,7 @@ def get_cookies( username, passwd, pt = "frds"):
     print
 
 
-def loadcookie(pt):
+def loadcookie( ptsite_dict, pt):
     loadcookies = {}
     filename = "cookies_%s.txt"%pt
     if not os.path.exists(filename):
@@ -71,6 +67,7 @@ def loadcookie(pt):
     print('Load cookies successsfully!')
     return loadcookies
 
-if __name__ == "__main__":
-    #get_cookies( username='null', passwd='null')
-    loadcookie('frds')
+#if __name__ == "__main__":
+    #get_cookies( username='breakertt', passwd='xsgty1999118xyz')
+    #loadcookie('frds')
+    
