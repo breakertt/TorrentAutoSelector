@@ -15,7 +15,11 @@
             "imagehash": "",
             "ssl": "yes"
         },
-        "captcha_pattern": "imagehash=(.*)\" alt"
+        "captcha": {
+            "exist": "True",
+            "pattern": "imagehash=(.*)\" alt"
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
     },
     "frds": {
         "fullname": "KeepFriends",
@@ -33,9 +37,13 @@
             "imagehash": "",
             "ssl": "yes"
         },
-        "captcha_pattern": "imagehash=(.*)\" border=\"0\""
+        "captcha": {
+            "exist": "True",
+            "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
     },
-    "u2": {
+    "u2-CurrentlyDisabled": {
         "fullname": "U2-dmhy",
         "urls": {
             "takelogin": "https://u2.dmhy.org/takelogin.php",
@@ -52,6 +60,78 @@
             "login_ajax": "1",
             "ssl": "yes"
         },
-        "captcha_pattern": "sid=(.*)\" alt"
+        "captcha": {
+            "exist": "True",
+            "pattern": "sid=(.*)\" alt"
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
+    },
+    "ttg": {
+        "fullname": "ToTheGlory",
+        "urls": {
+            "takelogin": "https://totheglory.im/takelogin.php",
+            "login": "https://totheglory.im/login.php",
+            "torrent": "https://totheglory.im/browse.php?c=M",
+            "link": "https://totheglory.im/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "rememberme": "yes",
+            "otp": "",
+            "passan": "",
+            "passid": 0,
+            "lang": 0
+        },
+        "captcha": {
+            "exist": "False"
+        },
+        "torr_fn_pattern" : "filename=(.*); "
+    },
+    "hdh": {
+        "fullname": "HDHome",
+        "urls": {
+            "takelogin": "https://hdhome.org/takelogin.php",
+            "captcha": "https://hdhome.org/image.php?action=regimage&imagehash=",
+            "login": "https://hdhome.org/login.php",
+            "torrent": "https://hdhome.org/torrents.php",
+            "link": "https://hdhome.org/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "imagestring": "",
+            "imagehash": "",
+            "ssl": "yes",
+            "trackerssl": "yes"
+        },
+        "captcha": {
+            "exist": "True",
+            "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
+    },
+    "opcd": {
+        "fullname": "OpenCD",
+        "urls": {
+            "takelogin": "https://open.cd/takelogin.php",
+            "captcha": "https://open.cd/image.php?action=regimage&imagehash=",
+            "login": "https://open.cd/login.php",
+            "torrent": "https://open.cd/torrents.php",
+            "link": "https://open.cd/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "imagestring": "",
+            "imagehash": "",
+            "ssl": "yes",
+            "trackerssl": "yes"
+        },
+        "captcha": {
+            "exist": "True",
+            "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
     }
 }
