@@ -1,5 +1,7 @@
-from bs4 import BeautifulSoup
 import re
+
+from bs4 import BeautifulSoup
+
 
 def myInt(str):
     return int(re.sub('[^0-9]','', str))

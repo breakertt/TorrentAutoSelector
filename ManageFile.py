@@ -1,12 +1,14 @@
 # -*- coding:utf-8 -*-
 
-import os
-import sys
-import requests
-import time
-import shutil
 import datetime
+import os
+import shutil
+import sys
+import time
+
+import requests
 from lxml import etree
+
 
 def load_xml(path):
     parser = etree.XMLParser(encoding="utf-8", strip_cdata=False, remove_blank_text=True)

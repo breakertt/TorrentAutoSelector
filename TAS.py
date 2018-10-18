@@ -1,23 +1,26 @@
 # -*- coding:utf-8 -*-
 
-import requests
-import re
-import sys
-import os
-import Cookies
-import json
-import GetTorrInfo
-import getopt
 import datetime
+import getopt
 import http.server
+import json
+import os
+import re
 import socketserver
-import ManageFile
-from bs4 import BeautifulSoup
+import sys
 from multiprocessing import Process
-from apscheduler.schedulers.background import BackgroundScheduler
 from urllib.parse import unquote
 
+import requests
+from apscheduler.schedulers.background import BackgroundScheduler
+from bs4 import BeautifulSoup
+
+import Cookies
+import GetTorrInfo
+import ManageFile
+
 #load essential values
+mainPath = os.getcwd()
 login = False
 pt_choosen = []
 myHeaders = {
@@ -25,7 +28,7 @@ myHeaders = {
         'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Accept-Encoding' : 'gzip, deflate',
         'Accept-Language' : 'zh-CN,zh;q=0.9,en;q=0.8'
-    } 
+    }
 with open("ptsite_info.json",'r') as load_f:
     ptsite_dict = json.load(load_f)
 
@@ -192,6 +195,7 @@ Now support ['hdc', 'frds', 'ttg']
     Process_httpserver = Process(target = httpserver)
     try:
         ManageFile.checkFiles()
+        os.chdir(mainPath)
         Process_httpserver.start()
         scheduler = BackgroundScheduler()
         scheduler.add_job(analyze_pt, 'interval', minutes = 15, args=[pt_choosen,ptsite_dict], next_run_time=datetime.datetime.now())

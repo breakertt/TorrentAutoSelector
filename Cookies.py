@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 
-import requests
-import re
-from PIL import Image
 import io
 import os
+import re
+
+import requests
+from PIL import Image
+
 
 def get_cookies( username, passwd, ptsite_dict, pt = "frds"):
 
@@ -85,4 +87,3 @@ def loadcookie( ptsite_dict, pt):
             loadcookies[name] = value
     print('Load cookies successsfully!')
     return loadcookies
-    
