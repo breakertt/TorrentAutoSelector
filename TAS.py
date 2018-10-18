@@ -143,6 +143,7 @@ def analyze_pt(pt_choosen, ptsite_dict, login = True):
                 if len(torr_list)>0:
                     rssList = get_torrents(pt, cookies, torr_list)
                     ManageFile.AddTorrToRss(rssList)
+                    os.chdir(mainPath)
             elif loadFlag == False:
                 print("Page Load Failed, this ptsite skipped!/nRelogin is recommended.")
                 #if input("if you want to remove the cookies saved file, enter 1\n") == "1":
@@ -153,6 +154,7 @@ def analyze_pt(pt_choosen, ptsite_dict, login = True):
             print(e)
             continue
     ManageFile.DeleteExipredTorr()
+    os.chdir(mainPath)
 
 
 if __name__ == "__main__":
