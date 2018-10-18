@@ -4,6 +4,7 @@ import os
 import sys
 import requests
 import time
+import shutil
 import datetime
 from lxml import etree
 
@@ -26,11 +27,13 @@ def get_item(torrTitle, torrFilename):
 
 def checkFiles():
     #check folder
-    if not os.path.exists("public"):
-        os.makedirs("public")
     #get new dir
     web_dir = os.path.join(os.path.dirname(__file__), 'public')
+    if not os.path.exists(web_dir):
+        os.makedirs(web_dir)
     os.chdir(web_dir)
+    if not os.path.exists("expire"):
+        os.makedirs("expire")
     #check rss.xml
     if not os.path.isfile("torrentrss.xml"):
         print("torrentrss.xml does't exist, try downloadling")
@@ -48,17 +51,43 @@ def AddTorrToRss(rssList):
         node = get_item(torrTitle = torr[0], torrFilename = torr[1])
         parent.append(node)
     root.write(xmlPath, pretty_print=True, xml_declaration=True, encoding='utf-8')
-    
-def GetFileCreateTime(filePath):
-    t = os.path.getctime(filePath)
-    return t
+
+def GetFileTime(filePath):
+    t1 = os.path.getctime(filePath)
+    t2 = os.path.getmtime(filePath)
+    if t1 < t2:
+        return t1
+    else:
+        return t2
+
+def DeteInRss(fileList):
+    xmlPath = "torrentrss.xml"
+    root = load_xml(xmlPath)
+    links = root.xpath("//enclosure")
+    for link in links:
+        url = link.get('url', '')
+        for file in fileList:
+            if url.find(file[0]) != -1:
+                parentnode = link.getparent()
+                parentnode.getparent().remove(parentnode)
+    root.write(xmlPath, pretty_print=True, xml_declaration=True, encoding='utf-8')
+
+def MoveFile(fileList):
+    for file in fileList:
+        print("Moving %s" % file[0])
+        print("This file existed for %d hours." % file[1])
+        shutil.move(file[0], "expire/%s" % file[0])
 
 def DeleteExipredTorr():
+    fileList = []
     web_dir = os.path.join(os.path.dirname(__file__), 'public')
     os.chdir(web_dir)
     nowTime = time.time()
-    for filename in os.listdir(web_dir):
-        if os.path.splitext(filename)[1] == '.torrent':
-            fileCreateTime = GetFileCreateTime(filename)
-            DeltaTime = nowTime - fileCreateTime
-            print(DeltaTime/3600)
+    for fileName in os.listdir(web_dir):
+        if os.path.splitext(fileName)[1] == '.torrent':
+            fileTime = GetFileTime(fileName)
+            DeltaTime = round((nowTime - fileTime) / 3600)
+            if DeltaTime >= 8:
+                fileList.append([fileName,DeltaTime])
+    MoveFile(fileList)
+    DeteInRss(fileList)

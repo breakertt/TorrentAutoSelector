@@ -112,6 +112,7 @@ def get_torrents(pt, cookies, torr_list):
             print("%s\nSkipped"%torr)
             continue
     return rssList
+    
 
 def analyze_pt(pt_choosen,ptsite_dict):
     print("")
@@ -148,6 +149,8 @@ def analyze_pt(pt_choosen,ptsite_dict):
         except Exception as e: 
             print(e)
             continue
+    ManageFile.DeleteExipredTorr()
+
 
 if __name__ == "__main__":
     help_msg = """                                                                                      
@@ -188,6 +191,7 @@ Now support ['hdc', 'frds', 'ttg']
 
     Process_httpserver = Process(target = httpserver)
     try:
+        ManageFile.checkFiles()
         Process_httpserver.start()
         scheduler = BackgroundScheduler()
         scheduler.add_job(analyze_pt, 'interval', minutes = 15, args=[pt_choosen,ptsite_dict], next_run_time=datetime.datetime.now())
