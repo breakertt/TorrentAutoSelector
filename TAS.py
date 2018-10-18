@@ -176,7 +176,7 @@ if __name__ == "__main__":
 ,@@@@/                         ,@@@@/                     
 ,@@@@/                         .@@@@/
 \n\nTAS.py -l <login> -p <ptsite>\n
-Now support ['hdc', 'frds', 'ttg', 'hdh', 'opcd']
+Now support ['hdc', 'frds', 'ttg', 'hdh', 'opcd', 'cmct']
         """
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hrtam:i:l:p:",

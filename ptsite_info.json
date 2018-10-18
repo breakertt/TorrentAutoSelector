@@ -133,5 +133,26 @@
             "pattern": "imagehash=(.*)\" border=\"0\""
         },
         "torr_fn_pattern" : "filename=\"(.*)\""
+    },
+    "cmct": {
+        "fullname": "CMCT",
+        "urls": {
+            "takelogin": "https://hdcmct.org/takelogin.php",
+            "captcha": "https://hdcmct.org/image.php?action=regimage&imagehash=",
+            "login": "https://hdcmct.org/login.php",
+            "torrent": "https://hdcmct.org/torrents.php",
+            "link": "https://hdcmct.org/"
+        },
+        "login_data": {
+            "username": "",
+            "password": "",
+            "imagestring": "",
+            "imagehash": ""
+        },
+        "captcha": {
+            "exist": "True",
+            "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
     }
 }
