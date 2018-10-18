@@ -117,7 +117,7 @@ def get_torrents(pt, cookies, torr_list):
     return rssList
     
 
-def analyze_pt(pt_choosen,ptsite_dict):
+def analyze_pt(pt_choosen, ptsite_dict, login = True):
     print("")
 
     #print time
@@ -130,7 +130,7 @@ def analyze_pt(pt_choosen,ptsite_dict):
             print("\nStarting Analyzing %s"%ptsite_dict[pt]["fullname"])
 
             #load cookies
-            cookies = get_cookies(pt = pt)
+            cookies = get_cookies(pt = pt, login = login)
 
             #get torrent.php content
             (torr_get,loadFlag) = get_torrhtml(pt = pt, cookies = cookies, ptsite_dict = ptsite_dict)
@@ -198,7 +198,7 @@ Now support ['hdc', 'frds', 'ttg']
         os.chdir(mainPath)
         Process_httpserver.start()
         scheduler = BackgroundScheduler()
-        scheduler.add_job(analyze_pt, 'interval', minutes = 15, args=[pt_choosen,ptsite_dict], next_run_time=datetime.datetime.now())
+        scheduler.add_job(analyze_pt, 'interval', minutes = 15, args=[pt_choosen,ptsite_dict,login], next_run_time=datetime.datetime.now())
         scheduler.start()
     except KeyboardInterrupt:
         print("Program Ended")
