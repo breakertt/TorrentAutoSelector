@@ -35,7 +35,8 @@ def httpserver():
     os.chdir(web_dir)
     Handler = http.server.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("", PORT), Handler)
-    print("PLEASE DO NOT OPEN THIS IN CHROME, MAY LEAD TO CRASH OF HTTP-SERVER!!!")
+    print("\n\n\nPLEASE DO NOT OPEN THIS IN CHROME, MAY LEAD TO CRASH OF HTTP-SERVER!!!\n\n\n")
+    print("Rss Url : http://127.0.0.1:4573/torrentrss.xml")
     print("Serving at port", PORT)
     try:
         httpd.serve_forever()
@@ -78,7 +79,7 @@ def get_torrhtml(pt, cookies, ptsite_dict):
     loadFlag = True
     # load page
     while (code != 200 and tryTimes < 5):
-        torr_get = requests.get(torr_url, headers=myHeaders, cookies = cookies,)
+        torr_get = requests.get(torr_url, headers=myHeaders, cookies = cookies, timeout=(10,10))
         print("Page loaded, Time = %ds"%round(torr_get.elapsed.microseconds / 100000))
         print("Url = \"%s\" Status_code = %s"%(torr_get.url, torr_get.status_code))
         code = torr_get.status_code
@@ -93,16 +94,16 @@ def get_torrents(pt, cookies, torr_list):
     for torr in torr_list:
         try:
             #try download torrent
-            torr_file = requests.get(torr[2], headers=myHeaders, cookies = cookies, timeout=20)
-            print("Download success, Time = %ds"%round(torr_file.elapsed.microseconds / 100000))
+            torr_file = requests.get(torr[2], headers=myHeaders, cookies = cookies, timeout=(5, 20))
             #get filename
             filename_pattern = re.compile(ptsite_dict[pt]['torr_fn_pattern'])
             filename = filename_pattern.findall(torr_file.headers['content-disposition'])[0]
             filename = unquote(filename)
             print(filename)
-            rssList.append([torr[1],filename])
+            print("Download success, Time = %ds"%round(torr_file.elapsed.microseconds / 100000))
             torr_file_path = "public/%s"%filename
             if not os.path.exists(torr_file_path):
+                rssList.append([torr[1],filename])
                 with open(torr_file_path, "wb") as savefile:
                     for data in torr_file.iter_content():
                         savefile.write(data)
@@ -139,9 +140,9 @@ def analyze_pt(pt_choosen,ptsite_dict):
                     rssList = get_torrents(pt, cookies, torr_list)
                     ManageFile.AddTorrToRss(rssList)
             elif loadFlag == False:
-                print("Page Load Failed, this ptsite skipped/n")
-                if input("if you want to remove the cookies saved file, enter 1\n") == "1":
-                    os.remove("cookies_%s.txt"%pt)
+                print("Page Load Failed, this ptsite skipped!/nRelogin is recommended.")
+                #if input("if you want to remove the cookies saved file, enter 1\n") == "1":
+                #    os.remove("cookies_%s.txt"%pt)
                 continue
                 
         except Exception as e: 
@@ -184,13 +185,13 @@ Now support ['hdc', 'frds', 'ttg']
         elif opt in ("-p", "--ptsite"):
             pt_choosen.append(arg)
     print(pt_choosen)
+
     Process_httpserver = Process(target = httpserver)
     try:
         Process_httpserver.start()
         scheduler = BackgroundScheduler()
         scheduler.add_job(analyze_pt, 'interval', minutes = 15, args=[pt_choosen,ptsite_dict], next_run_time=datetime.datetime.now())
         scheduler.start()
-        
     except KeyboardInterrupt:
         print("Program Ended")
         os._exit(0)

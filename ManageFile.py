@@ -3,6 +3,8 @@
 import os
 import sys
 import requests
+import time
+import datetime
 from lxml import etree
 
 def load_xml(path):
@@ -47,3 +49,16 @@ def AddTorrToRss(rssList):
         parent.append(node)
     root.write(xmlPath, pretty_print=True, xml_declaration=True, encoding='utf-8')
     
+def GetFileCreateTime(filePath):
+    t = os.path.getctime(filePath)
+    return t
+
+def DeleteExipredTorr():
+    web_dir = os.path.join(os.path.dirname(__file__), 'public')
+    os.chdir(web_dir)
+    nowTime = time.time()
+    for filename in os.listdir(web_dir):
+        if os.path.splitext(filename)[1] == '.torrent':
+            fileCreateTime = GetFileCreateTime(filename)
+            DeltaTime = nowTime - fileCreateTime
+            print(DeltaTime/3600)
