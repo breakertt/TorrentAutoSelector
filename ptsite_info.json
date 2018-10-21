@@ -19,6 +19,9 @@
             "exist": "True",
             "pattern": "imagehash=(.*)\" alt"
         },
+        "headers": {
+            "exist": "False"
+        },
         "torr_fn_pattern" : "filename=\"(.*)\""
     },
     "frds": {
@@ -40,6 +43,9 @@
         "captcha": {
             "exist": "True",
             "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "headers": {
+            "exist": "False"
         },
         "torr_fn_pattern" : "filename=\"(.*)\""
     },
@@ -64,6 +70,9 @@
             "exist": "True",
             "pattern": "sid=(.*)\" alt"
         },
+        "headers": {
+            "exist": "False"
+        },
         "torr_fn_pattern" : "filename=\"(.*)\""
     },
     "ttg": {
@@ -84,6 +93,9 @@
             "lang": 0
         },
         "captcha": {
+            "exist": "False"
+        },
+        "headers": {
             "exist": "False"
         },
         "torr_fn_pattern" : "filename=(.*); "
@@ -109,6 +121,9 @@
             "exist": "True",
             "pattern": "imagehash=(.*)\" border=\"0\""
         },
+        "headers": {
+            "exist": "False"
+        },
         "torr_fn_pattern" : "filename=\"(.*)\""
     },
     "opcd": {
@@ -132,6 +147,9 @@
             "exist": "True",
             "pattern": "imagehash=(.*)\" border=\"0\""
         },
+        "headers": {
+            "exist": "False"
+        },
         "torr_fn_pattern" : "filename=\"(.*)\""
     },
     "cmct": {
@@ -152,6 +170,35 @@
         "captcha": {
             "exist": "True",
             "pattern": "imagehash=(.*)\" border=\"0\""
+        },
+        "headers": {
+            "exist": "False"
+        },
+        "torr_fn_pattern" : "filename=\"(.*)\""
+    },
+    "mt": {
+        "fullname": "M-TEAM",
+        "urls": {
+            "takelogin": "https://tp.m-team.cc/takelogin.php",
+            "login": "https://tp.m-team.cc/login.php",
+            "torrent": "https://tp.m-team.cc/torrents.php",
+            "link": "https://tp.m-team.cc/"
+        },
+        "login_data": {
+            "username": "",
+            "password": ""
+        },
+        "captcha": {
+            "exist": "False"
+        },
+        "headers": {
+            "exist": "True",
+            "headers":{
+                "DNT" : "1",
+                "Upgrade-Insecure-Requests" : "1",
+                "Origin" : "https://tp.m-team.cc",
+                "Referer" : "https://tp.m-team.cc/login.php"
+            }
         },
         "torr_fn_pattern" : "filename=\"(.*)\""
     }

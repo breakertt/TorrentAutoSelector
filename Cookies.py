@@ -48,6 +48,8 @@ def get_cookies( username, passwd, ptsite_dict, pt = "frds"):
             myData['imagehash'] = captchaHash
 
     #try login
+    if ptsite_dict[pt]['headers']['exist'] == 'True':
+        myHeaders.update(ptsite_dict[pt]['headers']['headers'])
     login = sess.post(takeloginUrl, headers = myHeaders, data = myData)
     print(login.url, login.status_code, login.history)
 

@@ -175,11 +175,11 @@ if __name__ == "__main__":
 ,@@@@/                         .@@@@/                     
 ,@@@@/                         ,@@@@/                     
 ,@@@@/                         .@@@@/
-\n\nTAS.py -l <login> -p <ptsite>\n
-Now support ['hdc', 'frds', 'ttg', 'hdh', 'opcd', 'cmct']
+\n\nTAS.py -h -l <login:true> -p <ptsite>\n
+Now support ['hdc', 'frds', 'ttg', 'hdh', 'opcd', 'cmct', 'mt']
         """
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hrtam:i:l:p:",
+        opts, args = getopt.getopt(sys.argv[1:], "h:l:p:",
                                    ["help", "login", "ptsite"])
     except getopt.GetoptError:
         print(help_msg)

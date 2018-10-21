@@ -95,7 +95,20 @@ def GetTorrInfo(torr_html, pt, ptsite_dict):
                 uploader.append(myInt(every_torr_soup[i]("td")[7].string))
             else:
                 continue
-                
+
+    if pt == "mt":
+        all_torr_soup = html_soup.find(class_="torrents")
+        #print(all_torr_soup.prettify())
+        every_torr_soup = all_torr_soup.find_all( "tr", recursive=False)
+        every_torr_soup.remove(every_torr_soup[0])
+        for i in range(len(every_torr_soup)):
+            if not ((every_torr_soup[i].find(class_ = "download")) is None):
+                download_link.append(ptsite_dict[pt]['urls']['link'] + every_torr_soup[i].find(class_ = "download").parent.get("href"))
+                downloader.append(myInt(every_torr_soup[i]("td")[9].string))
+                title.append(every_torr_soup[i]("a")[1].attrs['title'])
+                uploader.append(myInt(every_torr_soup[i]("td")[8].string))
+            else:
+                continue
     
     #print selected torrents
     for i in range(len(title)):
